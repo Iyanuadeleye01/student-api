@@ -1,0 +1,31 @@
+{
+  "name": "student-api",
+  "version": "1.0.0",
+  "description": "student api",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Iyanuadeleye01/student-api.git"
+  },
+  "author": "Iyanu Adeleye",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Iyanuadeleye01/student-api/issues"
+  },
+  "homepage": "https://github.com/Iyanuadeleye01/student-api#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.2",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongodb": "^7.2.0",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui": "^5.32.6",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
