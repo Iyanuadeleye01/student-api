@@ -7,7 +7,7 @@ const doc = {
         description:"Student Records Api"
     },
     host: "localhost:4001",
-    schemes: ("http")
+    schemes: ("https")
 };
 
 const outputFile = "./swagger.json";
