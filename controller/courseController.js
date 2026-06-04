@@ -3,7 +3,7 @@ const db = require("../data/database");
 
 // GET ALL
 const getAllCourses = async (req, res) => {
-    //#swagger.tags = ['Hello world']
+    //#swagger.tags = ['Courses']
     try {
         const courses = await db.getDb().collection("courses").find().toArray();
         res.status(200).json(courses);
@@ -14,7 +14,7 @@ const getAllCourses = async (req, res) => {
 
 // GET ONE
 const getSingleCourse = async (req, res) => {
-    //#swagger.tags = ['Hello world']
+    //#swagger.tags = ['Courses']
     try {
         const course = await db.getDb().collection("courses").findOne({
             _id: new ObjectId(req.params.id)
@@ -32,7 +32,7 @@ const getSingleCourse = async (req, res) => {
 
 // CREATE
 const createCourse = async (req, res) => {
-    //#swagger.tags = ['Hello world']
+    //#swagger.tags = ['Courses']
     try {
         const { courseCode, courseTitle, lecturer, creditUnit } = req.body;
 
@@ -40,11 +40,20 @@ const createCourse = async (req, res) => {
             return res.status(400).json({ message: "All fields required" });
         }
 
+        //Type validation
+        const credit = Number(creditUnit);
+
+        if (isNaN(credit)) {
+            return res.status(400).json({
+                message: "creditUnit must be a number"
+            });
+        }
+
         const response = await db.getDb().collection("courses").insertOne({
             courseCode,
             courseTitle,
             lecturer,
-            creditUnit
+            creditUnit: credit
         });
 
         res.status(201).json(response);
@@ -55,8 +64,18 @@ const createCourse = async (req, res) => {
 
 // UPDATE
 const updateCourse = async (req, res) => {
-    //#swagger.tags = ['Hello world']
+    //#swagger.tags = ['Courses']
     try {
+        if (
+            !req.body.courseCode ||
+            !req.body.courseTitle ||
+            !req.body.lecturer ||
+            !req.body.creditUnit
+        ) {
+            return res.status(400).json({
+                message: "All fields are required"
+            });
+        }
         const response = await db.getDb().collection("courses").updateOne(
             { _id: new ObjectId(req.params.id) },
             {
@@ -81,7 +100,7 @@ const updateCourse = async (req, res) => {
 
 // DELETE
 const deleteCourse = async (req, res) => {
-    //#swagger.tags = ['Hello world']
+    //#swagger.tags = ['Courses']
     try {
         const response = await db.getDb().collection("courses").deleteOne({
             _id: new ObjectId(req.params.id)

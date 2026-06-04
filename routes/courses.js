@@ -3,10 +3,12 @@ const router = express.Router();
 
 const courseController = require("../controller/courseController");
 
+const {isAuthenticated} = require('../middleware/authenticate');
+
 router.get("/", courseController.getAllCourses);
 router.get("/:id", courseController.getSingleCourse);
-router.post("/", courseController.createCourse);
-router.put("/:id", courseController.updateCourse);
-router.delete("/:id", courseController.deleteCourse);
+router.post("/", isAuthenticated, courseController.createCourse);
+router.put("/:id", isAuthenticated, courseController.updateCourse);
+router.delete("/:id", isAuthenticated, courseController.deleteCourse);
 
 module.exports = router;

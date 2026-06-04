@@ -3,7 +3,7 @@ const db = require("../data/database");
 
 // GET ALL
 const getAllStudents = async (req, res) => {
-    //#swagger.tags = ['Hello world']
+    //#swagger.tags = ['Students']
     try {
         const students = await db.getDb().collection("students").find().toArray();
         res.status(200).json(students);
@@ -14,7 +14,7 @@ const getAllStudents = async (req, res) => {
 
 // GET ONE
 const getSingleStudent = async (req, res) => {
-    //#swagger.tags = ['Hello world']
+    //#swagger.tags = ['Students']
     try {
         const student = await db.getDb().collection("students").findOne({
             _id: new ObjectId(req.params.id)
@@ -32,7 +32,7 @@ const getSingleStudent = async (req, res) => {
 
 // CREATE 
 const createStudent = async (req, res) => {
-    //#swagger.tags = ['Hello world']
+    //#swagger.tags = ['Students']
     try {
         const { firstName, lastName, email, age, department, level, gpa } = req.body;
 
@@ -64,8 +64,16 @@ const createStudent = async (req, res) => {
 
 // UPDATE 
 const updateStudent = async (req, res) => {
-    //#swagger.tags = ['Hello world']
+    //#swagger.tags = ['Students']
     try {
+        if(!req.body.firstName ||
+            !req.body.lastName ||
+            !req.body.email) {
+            return res.status(400).json({message: 'Firstname, Lastname and email are required'});
+        }
+        if(!ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({message:'Valid ID is required'});
+        }
         const id = new ObjectId(req.params.id);
 
         const updateData = {
@@ -98,7 +106,7 @@ const updateStudent = async (req, res) => {
 
 // DELETE 
 const deleteStudent = async (req, res) => {
-    //#swagger.tags = ['Hello world']
+    //#swagger.tags = ['Students']
     try {
         const response = await db.getDb().collection("students").deleteOne({
             _id: new ObjectId(req.params.id)
